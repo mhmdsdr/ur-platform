@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "منصة اور العالمية - استثمار وتداول مالي آمن ومميز.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
