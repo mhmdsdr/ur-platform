@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { TrendingUp, Mail, Lock, Loader2, AlertCircle, User } from "lucide-react";
 import { sendTelegramNotification } from "@/lib/actions";
 
-export default function RegisterPage() {
+export const dynamic = 'force-dynamic';
+
+function RegisterForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
@@ -187,12 +189,24 @@ export default function RegisterPage() {
                 </div>
 
                 <p className="text-center text-sm text-zinc-500">
-                    لديك حساب بالفعل؟;{" "}
+                    لديك حساب بالفعل؟{" "}
                     <Link href="/auth/login" className="text-amber-500 hover:text-amber-400 font-medium">
                         تسجيل الدخول
                     </Link>
                 </p>
             </div>
         </div>
+    );
+}
+
+export default function RegisterPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-[85vh] flex items-center justify-center p-4">
+                <Loader2 className="animate-spin text-amber-500 w-12 h-12" />
+            </div>
+        }>
+            <RegisterForm />
+        </Suspense>
     );
 }
